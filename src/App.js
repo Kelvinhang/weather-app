@@ -1,12 +1,88 @@
 import "./App.css";
+import tempImg from "./images/temp.png"
+import feelsLikeImg from "./images/feelsLike.png"
+import humidityImg from "./images/humidity.png"
+import windSpeedImg from "./images/windSpeed.png"
+import visibilityImg from "./images/visibility.png"
+import cloudinessImg from "./images/cloudiness.png"
 
 function App() {
+  async function getWeatherInfo(location, metric) {
+    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&APPID=7c06df40661810ca2b8d0dc66cd6da77&units=${metric}`,
+    { mode: "cors" });
+    const weatherData = await response.json();
+    console.log(weatherData);
+  }
+
+  getWeatherInfo("hong kong", "metric");
+
   return (
-    <div className="weatherInfo">
-      <div className="city">Hong Kong</div>
-      <div className="date">26/11/2022</div>
-      <div className="time">17:36</div>
-      <div className="temp">24°C</div>
+    <div className="weatherApp">
+      <div className="locationInfo">
+        <div className="city">Hong Kong</div>
+        <div className="time">17:36</div>
+        <div className="date">26/11/2022</div>
+      </div>
+      <div className="weatherInfo">
+        <div className="section">
+          <div className="temp">
+            <div className="weatherImg">
+              <img src={tempImg} alt="tempImg"></img>
+            </div>
+            <div className="weatherDetail">
+              <h6>Temperature</h6>
+              <p>24°C</p>
+            </div>
+          </div>
+          <div className="feelsLike">
+            <div className="weatherImg">
+              <img src={feelsLikeImg} alt="feelsLikeImg"></img>
+            </div>
+            <div className="weatherDetail">
+              <h6>Feels like</h6>
+              <p>23°C</p>
+            </div>
+          </div>
+          <div className="humidity">
+            <div className="weatherImg">
+              <img src={humidityImg} alt="humidityImg"></img>
+            </div>
+            <div className="weatherDetail">
+              <h6>Humidity</h6>
+              <p>80%</p>
+            </div>
+          </div>
+        </div>
+        <div className="section">
+          <div className="windSpeed">
+            <div className="weatherImg">
+              <img src={windSpeedImg} alt="windSpeedImg"></img>
+            </div>
+            <div className="weatherDetail">
+              <h6>Wind speed</h6>
+              <p>5 m/s</p>
+            </div>
+          </div>
+          <div className="visibility">
+            <div className="weatherImg">
+              <img src={visibilityImg} alt="visibilityImg"></img>
+            </div>
+            <div className="weatherDetail">
+              <h6>Visibity</h6>
+              <p>10 km</p>
+            </div>
+          </div>
+          <div className="cloudiness">
+            <div className="weatherImg">
+              <img src={cloudinessImg} alt="cloudinessImg"></img>
+            </div>
+            <div className="weatherDetail">
+              <h6>Cloudiness</h6>
+              <p>90%</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

@@ -5,7 +5,7 @@ body {
   min-height: 100vh;
 }
 
-.weatherInfo {
+.weatherApp {
   display: flex;
   flex-direction: column;
   padding: 6% 12%;
@@ -16,6 +16,52 @@ body {
   font-size: -webkit-xxx-large;
 }
 
+.weatherInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.weatherInfo h6 {
+  margin-block-end: 0;
+}
+
+.weatherInfo p {
+  margin-block-start: 0.5em;
+  font-size: larger;
+}
+
+.section {
+  display: flex;
+  justify-content: space-around;
+  font-size: xx-large;
+}
+
 .temp {
-  font-size: -webkit-xxx-large;
+  display: flex;
+  flex-direction: row;
+}
+
+.feelsLike {
+  display: flex;
+  flex-direction: row;
+}
+
+.humidity {
+  display: flex;
+  flex-direction: row;
+}
+
+.windSpeed {
+  display: flex;
+  flex-direction: row;
+}
+
+.visibility {
+  display: flex;
+  flex-direction: row;
+}
+
+.cloudiness {
+  display: flex;
+  flex-direction: row;
 }
