@@ -1,27 +1,61 @@
 import "./App.css";
-import tempImg from "./images/temp.png"
-import feelsLikeImg from "./images/feelsLike.png"
-import humidityImg from "./images/humidity.png"
-import windSpeedImg from "./images/windSpeed.png"
-import visibilityImg from "./images/visibility.png"
-import cloudinessImg from "./images/cloudiness.png"
+import React, {useState, useEffect} from "react";
+import { format } from "date-fns";
+import tempImg from "./images/temp.png";
+import feelsLikeImg from "./images/feelsLike.png";
+import humidityImg from "./images/humidity.png";
+import windSpeedImg from "./images/windSpeed.png";
+import visibilityImg from "./images/visibility.png";
+import cloudinessImg from "./images/cloudiness.png";
 
 function App() {
+  const [weatherInfo, setweatherInfo] = useState({
+    city: "",
+    date: "",
+    temp: "",
+    feelsLike: "",
+    humidity: "",
+    windSpeed: "",
+    visibility: "",
+    cloudiness: ""
+  });
+
   async function getWeatherInfo(location, metric) {
     const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&APPID=7c06df40661810ca2b8d0dc66cd6da77&units=${metric}`,
     { mode: "cors" });
     const weatherData = await response.json();
-    console.log(weatherData);
+    changeLocation(weatherData);
   }
 
-  getWeatherInfo("hong kong", "metric");
+  function changeLocation(data){
+    setweatherInfo({city: data.name,
+      date: format(new Date(), "cccc LLLL d, yyyy"),
+      temp: data.main.temp + "℃",
+      feelsLike: data.main.feels_like + "℃",
+      humidity: data.main.humidity + "%",
+      windSpeed: data.wind.speed + "m/s",
+      visibility: data.visibility/1000 + "km",
+      cloudiness: data.clouds.all + "%"
+    })
+  }
+
+  useEffect(() => {
+    getWeatherInfo("hong kong", "metric");
+  },[]);
 
   return (
     <div className="weatherApp">
       <div className="locationInfo">
-        <div className="city">Hong Kong</div>
-        <div className="time">17:36</div>
-        <div className="date">26/11/2022</div>
+        <div className="form__group field">
+          <input
+            className="form__field"
+            type="text"
+            placeholder="Search location.."
+          />
+          <label className="form__label">Search location</label>
+        </div>
+        <div className="city">{weatherInfo.city}</div>
+        <div className="date">{weatherInfo.date}</div>
       </div>
       <div className="weatherInfo">
         <div className="section">
@@ -31,7 +65,7 @@ function App() {
             </div>
             <div className="weatherDetail">
               <h6>Temperature</h6>
-              <p>24°C</p>
+              <p>{weatherInfo.temp}</p>
             </div>
           </div>
           <div className="feelsLike">
@@ -40,7 +74,7 @@ function App() {
             </div>
             <div className="weatherDetail">
               <h6>Feels like</h6>
-              <p>23°C</p>
+              <p>{weatherInfo.feelsLike}</p>
             </div>
           </div>
           <div className="humidity">
@@ -49,7 +83,7 @@ function App() {
             </div>
             <div className="weatherDetail">
               <h6>Humidity</h6>
-              <p>80%</p>
+              <p>{weatherInfo.humidity}</p>
             </div>
           </div>
         </div>
@@ -60,7 +94,7 @@ function App() {
             </div>
             <div className="weatherDetail">
               <h6>Wind speed</h6>
-              <p>5 m/s</p>
+              <p>{weatherInfo.windSpeed}</p>
             </div>
           </div>
           <div className="visibility">
@@ -68,8 +102,8 @@ function App() {
               <img src={visibilityImg} alt="visibilityImg"></img>
             </div>
             <div className="weatherDetail">
-              <h6>Visibity</h6>
-              <p>10 km</p>
+              <h6>Visibility</h6>
+              <p>{weatherInfo.visibility}</p>
             </div>
           </div>
           <div className="cloudiness">
@@ -78,7 +112,7 @@ function App() {
             </div>
             <div className="weatherDetail">
               <h6>Cloudiness</h6>
-              <p>90%</p>
+              <p>{weatherInfo.cloudiness}</p>
             </div>
           </div>
         </div>
