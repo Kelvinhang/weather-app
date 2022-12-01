@@ -25,9 +25,10 @@ function App() {
     { mode: "cors" });
     const weatherData = await response.json();
     changeLocation(weatherData);
+    console.log("run");
   }
 
-  function changeLocation(data){
+  function changeLocation(data) {
     setweatherInfo({city: data.name,
       date: format(new Date(), "cccc LLLL d, yyyy"),
       temp: data.main.temp + "℃",
@@ -37,6 +38,13 @@ function App() {
       visibility: data.visibility/1000 + "km",
       cloudiness: data.clouds.all + "%"
     })
+  }
+
+  function searchLocation(e) {
+      if (e.key === "Enter") {
+        getWeatherInfo(e.target.value, "metric");
+        e.target.value = "";
+      }
   }
 
   useEffect(() => {
@@ -51,6 +59,7 @@ function App() {
             className="form__field"
             type="text"
             placeholder="Search location.."
+            onKeyDown={searchLocation}
           />
           <label className="form__label">Search location</label>
         </div>

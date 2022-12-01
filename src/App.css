@@ -9,7 +9,8 @@ body {
   display: flex;
   flex-direction: column;
   padding: 6% 12%;
-  color: aliceblue;
+  color: #97ceff;
+  font-family: monospace;
 }
 
 .city {
